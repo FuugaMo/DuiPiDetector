@@ -1,4 +1,34 @@
-
-Windows/.DS_Store
-MacOS/.DS_Store
+# 忽略操作系统生成的文件
 .DS_Store
+Thumbs.db
+
+# 忽略IDE或编辑器生成的文件
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# 忽略编译生成的文件
+/build/
+/dist/
+
+# 忽略依赖管理工具生成的文件和目录
+/node_modules/
+/bower_components/
+
+# 忽略日志和临时文件
+/logs/
+/temp/
+
+# 忽略敏感信息
+config.js
+secrets.txt
+
+# 忽略特定文件类型
+*.bak
+*.tar.gz
+
+# 忽略个人配置文件（每个人的配置文件可能不同）
+.personal-config
+
+# 忽略其他自定义规则
