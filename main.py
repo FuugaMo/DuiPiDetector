@@ -4,6 +4,7 @@ import datetime
 import os
 import sys
 import time
+import readline
 from bs4 import BeautifulSoup
 
 
@@ -214,6 +215,7 @@ def getKeywords():
     print("\n注意：关键词不要太长，否则可能会出现抓取不到的情况。最多输入200个关键词。")
     print("请输入要搜索关键词，以回车分隔。再按一次回车则结束关键词输入:")
     while True:
+        # 为了防止中文输入删除不干净，导入readline模块
         keyword = input()
         if keyword == '':
             break
