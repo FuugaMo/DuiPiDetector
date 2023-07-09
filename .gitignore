@@ -32,5 +32,4 @@ secrets.txt
 .personal-config
 
 # 忽略其他自定义规则
-.DS_Store
-.DS_Store
+**/.DS_Store
