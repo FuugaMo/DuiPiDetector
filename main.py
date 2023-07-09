@@ -247,8 +247,11 @@ def main():
         access_token = getAccessToken(login_url, phone, password)
     print("\n登录成功。")
 
+    # 获取关键词
     keywords = getKeywords()
+    # 获取抓取间隔时间
     waitingtime = getWatingTime()
+    # 获取专区
     roomid = SelectRoom()
     # print(access_token)
     # 检查登录是否成功
@@ -257,10 +260,10 @@ def main():
         t_b = 1
         while True:
 
-            # url = 'http://www.mrpyq.com/api/feed/feeds_by_room?access_token= {tokennumber} &page=1&t=1688783232199&roomid=55a8ba62fbe78e0577201b2e'
+            # url格式 = 'http://www.mrpyq.com/api/feed/feeds_by_room?access_token={token_number}&page=1&t=1688783232199&roomid=55a8ba62fbe78e0577201b2e'
             main = 'http://www.mrpyq.com/api/feed/feeds_by_room?'
 
-        
+            # 抓取页面
             page = 1
 
             # 获取当前时间
