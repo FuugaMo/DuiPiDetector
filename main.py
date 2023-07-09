@@ -239,6 +239,14 @@ def main():
     # 登录
     login_url, phone, password = Login()
     access_token = getAccessToken(login_url, phone, password)
+
+    # 检查登录是否成功
+    while access_token is None:
+        print("\n登录失败，请重新登录。")
+        login_url, phone, password = Login()
+        access_token = getAccessToken(login_url, phone, password)
+    print("\n登录成功。")
+
     keywords = getKeywords()
     waitingtime = getWatingTime()
     roomid = SelectRoom()
@@ -260,11 +268,14 @@ def main():
             # 将时间格式化为所需的日期和时间格式
             formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
             # 将格式化后的时间转换为时间戳
-            t = int(time.mktime(time.strptime(formatted_time, "%Y-%m-%d %H:%M:%S"))) * 1000
+            t = int(
+                time.mktime(time.strptime(formatted_time,
+                                          "%Y-%m-%d %H:%M:%S"))) * 1000
 
             print("\n正在抓取中……请耐心等待……")
             # 要修改roomid/subroomid
-            url = main + 'access_token=' + access_token + '&page=' + str(page) + '&t=' + str(t) + '&subroomid=' + roomid
+            url = main + 'access_token=' + access_token + '&page=' + str(
+                page) + '&t=' + str(t) + '&subroomid=' + roomid
 
             response = requests.get(url)
 
@@ -292,7 +303,8 @@ def main():
                     tamestamps.append(timestamp)
 
                 # Pair and output the values
-                for name, content, no, timestamp in zip(names, contents, nos, tamestamps):
+                for name, content, no, timestamp in zip(
+                        names, contents, nos, tamestamps):
                     print("Time:", timestamp)
                     print("Name:", name + " " + str(no))
                     print("Content:", content)
@@ -301,16 +313,18 @@ def main():
                 print('\n请求失败!')
 
             # 获取可执行文件所在的路径
-            # pyinstaller 之后的 exe 文件所在地址，如果直接运行py文件则 current_dir = os.path.dirname(os.path.abspath(__file__))
+            # pyinstaller 之后的 exe 文件所在地址，如果直接运行py文件则将exe_dir替换成current_dir = os.path.dirname(os.path.abspath(__file__))
             exe_dir = os.path.dirname(sys.executable)
 
             # 构建文件路径
             file_path = os.path.join(exe_dir, '所有帖子.txt')
 
             # 打开文件并进行操作
-            with open(file_path, 'a') as f:
+            with open(file_path, 'a', encoding='utf-8') as f:  # 使用uft-8编码格式
                 # 逆序遍历
-                for name, content, no, timestamp in zip(names[::-1], contents[::-1], nos[::-1], tamestamps[::-1]):
+                for name, content, no, timestamp in zip(
+                        names[::-1], contents[::-1], nos[::-1],
+                        tamestamps[::-1]):
                     # 检查时间戳
                     if timestamp > t_a:
                         t_a = timestamp
@@ -325,9 +339,11 @@ def main():
             file_path = os.path.join(exe_dir, '关键词相关帖子.txt')
 
             # 打开文件并进行操作
-            with open(file_path, 'a') as f:
+            with open(file_path, 'a', encoding='utf-8') as f:
                 # 逆序遍历
-                for name, content, no, timestamp in zip(names[::-1], contents[::-1], nos[::-1], tamestamps[::-1]):
+                for name, content, no, timestamp in zip(
+                        names[::-1], contents[::-1], nos[::-1],
+                        tamestamps[::-1]):
 
                     # 检查时间戳
                     if timestamp > t_b:
@@ -335,7 +351,8 @@ def main():
                         timestamp = timestamp / 1000  # 将毫秒转换为秒
                         timestamp = datetime.datetime.fromtimestamp(timestamp)
                         # 如果name和content中包含keywords中的任意一个关键词，则写入txt文件
-                        if any(keyword in name for keyword in keywords) or any(keyword in content for keyword in keywords):
+                        if any(keyword in name for keyword in keywords) or any(
+                                keyword in content for keyword in keywords):
                             f.write("Time:" + str(timestamp) + '\n')
                             f.write("Name:" + name + " " + str(no) + '\n')
                             if content != None:
